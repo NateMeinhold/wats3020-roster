@@ -36,8 +36,8 @@ class Student extends Person {
             for (let mark of this.attendance){
                 counter += mark;
             }
-            let attendancePercentage = counter /this.attendance.length) * 100;
-            return '$(attendancePercentage.toFixed(2))%';
+            let attendancePercentage = (counter / this.attendance.length) * 100;
+            return `${attendancePercentage.toFixed(2)}%`;
         } else {
             return '0%';
         }
@@ -56,9 +56,10 @@ class Student extends Person {
 // The `Teacher` class should add a property called `this.honorific` (supplied
 // when an instance of `Teacher` is created).
 class Teacher extends Person {
-    constructor(name, email, honorific)
+    constructor(name, email, honorific){
     super(name, email);
     this.honorific = honorific;
+    }
 }
 
 // TODO: Set up our Course class so we can run the whole roster from it.
@@ -110,9 +111,6 @@ addStudent() {
     // TODO: Create a method to mark a student's attendance called `markAttendance()`.
     // This method should accept a parameter called `username` containing the
     // `username` that will match the `username` property on the `Student` object.
-    markAttendance(username, status = "present") {
-        
-    }
 
     // TODO: The FIRST step to create a functioning `markAttendance()` method is
     // to retreive the `Student` object out of the `this.students` Array. You
@@ -124,7 +122,15 @@ addStudent() {
     // TODO: Now that we have retrieved the specific `Student` object we want
     // to work with, we can use the appropriate method on the `Student` object
     // to record the attendance.
-
+    markAttendance(username, status = "present"){
+        let foundStudent = this.findStudent(username);
+        if (status === "present") {
+            foundStudent.attendance.push(1);
+        } else {
+            foundStudent.attendance.push(0);
+        }
+        updateRoster(this);
+    }
 
 
     //////////////////////////////////////////////
@@ -150,14 +156,17 @@ addStudent() {
 // `Course` object, you must gather the following information:
 //
 // TODO: Prompt the user for the `courseCode` (the number/code of the course, like "WATS 3000").
+let courseCode = prompt("Enter the course code: ", "Wats3020"); 
 
 // TODO: Prompt the user for the `courseTitle` (the name of the course, like "Introduction to JavaScript").
+let courseTitle = prompt("Enter the course title: ", "Intro to JavaScript"); 
 
 // TODO: Prompt the user for the  `courseDescription` (the descriptive summary of the course).
+let courseDescription = prompt("Enter the course description: ", "Learning to code JS"); 
 
 // Create a new `Course` object instance called `myCourse` using the three data points just collected from the user.
 // TODO: Add in the values for the information supplied by the user above.
-
+let myCourse = new Course(courseCode, courseTitle, courseDescription);
 
 ///////////////////////////////////////////////////
 //////// Main Script /////////////////////////////
